@@ -1,0 +1,23 @@
+{
+    "Name": "dmri-preproc - BIDS-aware diffusion MRI preprocessing pipeline with denoising, topup/eddy correction, bias correction, T1 processing, and QC outputs.",
+    "BIDSVersion": "1.4.0",
+    "DatasetType": "derivative",
+    "PipelineDescription":
+        {
+            "Name": "dmri-preproc",
+            "Version": "0.1.0",
+            "CodeURL": "http://github.com/erfanzarenia/dmri-preproc",
+            "Author": "Erfan Zarenia",
+            "AuthorEmail": "ezarenia@uwo.ca"
+        },
+    "GeneratedBy": [
+        {
+            "Name": "dmri-preproc",
+            "Version": "0.1.0",
+            "CodeURL": "http://github.com/erfanzarenia/dmri-preproc",
+            "Author": "Erfan Zarenia",
+            "AuthorEmail": "ezarenia@uwo.ca"
+ 
+        }
+    ]
+}

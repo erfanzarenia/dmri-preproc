@@ -1,0 +1,10 @@
+app_version: "0.1.0"
+snakebids_version: "latest"
+
+bids_dir: ""
+output_dir: ""
+
+debug: false
+
+derivatives: false
+
