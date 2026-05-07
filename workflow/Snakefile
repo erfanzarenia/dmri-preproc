@@ -1,0 +1,57 @@
+# ---- begin snakebids boilerplate ---------------------------------------------
+
+import os
+import snakebids
+from snakebids import bids
+
+configfile: workflow.source_path("../config/snakebids.yml")
+
+inputs = snakebids.generate_inputs(
+    bids_dir=config["bids_dir"],
+    pybids_inputs=config["pybids_inputs"],
+    pybids_database_dir=config.get("pybids_db_dir"),
+    pybids_reset_database=config.get("pybids_db_reset"),
+    derivatives=config.get("derivatives", None),
+    participant_label=config.get("participant_label", None),
+    exclude_participant_label=config.get("exclude_participant_label", None),
+    use_bids_inputs=True,
+)
+
+wildcard_constraints:
+    **snakebids.get_wildcard_constraints(config["pybids_inputs"])
+
+PARTICIPANTS = config["participant_label"]
+if isinstance(PARTICIPANTS, str):
+    PARTICIPANTS = [PARTICIPANTS]
+
+# ---- end snakebids boilerplate -----------------------------------------------
+
+OUTDIR = config["output_dir"]
+LOGDIR = os.path.join(OUTDIR, "logs")
+QCDIR = os.path.join(OUTDIR, "qc")
+BENCHDIR = os.path.join(OUTDIR, "benchmarks")
+
+include: "rules/import.smk"
+include: "rules/convert_to_mif.smk"
+
+
+rule all:
+    input:
+        expand(
+            os.path.join(
+                OUTDIR,
+                "sub-{subject}",
+                "dwi",
+                "sub-{subject}_run-01_desc-import_dwi.mif",
+            ),
+            subject=PARTICIPANTS,
+        ),
+        expand(
+            os.path.join(
+                OUTDIR,
+                "sub-{subject}",
+                "dwi",
+                "sub-{subject}_run-02_desc-import_dwi.mif",
+            ),
+            subject=PARTICIPANTS,
+        )

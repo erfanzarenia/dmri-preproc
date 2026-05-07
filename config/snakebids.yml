@@ -5,6 +5,120 @@ bids_dir: ""
 output_dir: ""
 
 debug: false
-
 derivatives: false
 
+analysis_levels: &analysis_levels
+  - participant
+
+targets_by_analysis_level:
+  participant:
+    - ""
+
+pybids_inputs:
+  dwi_run_01:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .nii.gz
+      run: "01"
+    wildcards:
+      - subject
+
+  dwi_run_01_bvec:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .bvec
+      run: "01"
+    wildcards:
+      - subject
+
+  dwi_run_01_bval:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .bval
+      run: "01"
+    wildcards:
+      - subject
+
+  dwi_run_01_json:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .json
+      run: "01"
+    wildcards:
+      - subject
+
+  dwi_run_02:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .nii.gz
+      run: "02"
+    wildcards:
+      - subject
+
+  dwi_run_02_bvec:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .bvec
+      run: "02"
+    wildcards:
+      - subject
+
+  dwi_run_02_bval:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .bval
+      run: "02"
+    wildcards:
+      - subject
+
+  dwi_run_02_json:
+    filters:
+      datatype: dwi
+      suffix: dwi
+      extension: .json
+      run: "02"
+    wildcards:
+      - subject
+
+# pybids_db_dir: "/absolute/path/to/pybids_db"
+# pybids_db_reset: false
+
+parse_args:
+  bids_dir:
+    help: The directory with the input dataset formatted according to the BIDS standard.
+    type: Path
+
+  output_dir:
+    help: The directory where the output files should be stored.
+    type: Path
+
+  analysis_level:
+    help: Level of the analysis that will be performed.
+    choices: *analysis_levels
+
+  --participant_label:
+    help: The label(s) of the participant(s) that should be analyzed.
+    nargs: "+"
+
+  --exclude_participant_label:
+    help: The label(s) of the participant(s) that should be excluded.
+    nargs: "+"
+
+  --derivatives:
+    help: Path(s) to derivative dataset(s) or folders containing derivative datasets.
+    default: false
+    nargs: "+"
+
+singularity:
+  mrtrix: "docker://mrtrix3/mrtrix3:3.0.4"
+
+mrtrix:
+  default_nthreads: 4
+  mrconvert_nthreads: 4
