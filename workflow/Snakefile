@@ -34,6 +34,7 @@ BENCHDIR = os.path.join(OUTDIR, "benchmarks")
 include: "rules/import.smk"
 include: "rules/convert_to_mif.smk"
 include: "rules/denoise_degibbs.smk"
+include: "rules/topup_eddy_prep.smk"
 
 
 rule all:
@@ -43,7 +44,7 @@ rule all:
                 OUTDIR,
                 "sub-{subject}",
                 "dwi",
-                "sub-{subject}_run-01_desc-degibbs_dwi.mif",
+                "sub-{subject}_desc-dwiroles.json",
             ),
             subject=PARTICIPANTS,
         ),
@@ -52,7 +53,16 @@ rule all:
                 OUTDIR,
                 "sub-{subject}",
                 "dwi",
-                "sub-{subject}_run-02_desc-degibbs_dwi.mif",
+                "sub-{subject}_desc-topup_acqparams.txt",
+            ),
+            subject=PARTICIPANTS,
+        ),
+        expand(
+            os.path.join(
+                OUTDIR,
+                "sub-{subject}",
+                "dwi",
+                "sub-{subject}_desc-topup_b0pair.mif",
             ),
             subject=PARTICIPANTS,
         )
