@@ -122,3 +122,9 @@ singularity:
 mrtrix:
   default_nthreads: 4
   mrconvert_nthreads: 4
+
+  denoise: true
+  degibbs: true
+  min_denoise_volumes: 30
+  dwidenoise_nthreads: 6
+  mrdegibbs_nthreads: 6

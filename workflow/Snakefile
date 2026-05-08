@@ -33,6 +33,7 @@ BENCHDIR = os.path.join(OUTDIR, "benchmarks")
 
 include: "rules/import.smk"
 include: "rules/convert_to_mif.smk"
+include: "rules/denoise_degibbs.smk"
 
 
 rule all:
@@ -42,7 +43,7 @@ rule all:
                 OUTDIR,
                 "sub-{subject}",
                 "dwi",
-                "sub-{subject}_run-01_desc-import_dwi.mif",
+                "sub-{subject}_run-01_desc-degibbs_dwi.mif",
             ),
             subject=PARTICIPANTS,
         ),
@@ -51,7 +52,7 @@ rule all:
                 OUTDIR,
                 "sub-{subject}",
                 "dwi",
-                "sub-{subject}_run-02_desc-import_dwi.mif",
+                "sub-{subject}_run-02_desc-degibbs_dwi.mif",
             ),
             subject=PARTICIPANTS,
         )
