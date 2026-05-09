@@ -36,20 +36,16 @@ include: "rules/convert_to_mif.smk"
 include: "rules/denoise_degibbs.smk"
 include: "rules/topup_eddy_prep.smk"
 include: "rules/topup_eddy.smk"
+include: "rules/post_eddy.smk"
 
 
 rule all:
     input:
         expand(
-            os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-eddy_dwi.nii.gz"),
+            os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-eddy_dwi.mif"),
             subject=PARTICIPANTS,
         ),
         expand(
-            os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-eddy_dwi.bvec"),
+            os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-brain_mask.nii.gz"),
             subject=PARTICIPANTS,
-        ),
-        expand(
-            os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-eddy_dwi.bval"),
-            subject=PARTICIPANTS,
-        )
         )
