@@ -118,13 +118,19 @@ parse_args:
 
 singularity:
   mrtrix: "docker://mrtrix3/mrtrix3:3.0.4"
+  fsl: "docker://brainlife/fsl/6.0.0"
 
 mrtrix:
   default_nthreads: 4
   mrconvert_nthreads: 4
-
+  dwi2mask_nthreads: 4
   denoise: true
   degibbs: true
   min_denoise_volumes: 30
   dwidenoise_nthreads: 6
   mrdegibbs_nthreads: 6
+
+fsl:
+  topup_config: "b02b0.cnf"
+  eddy_nthreads: 8
+  eddy_exe: "/software/fsl/6.0.4/bin/eddy_cpu"
