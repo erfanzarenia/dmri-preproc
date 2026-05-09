@@ -37,12 +37,13 @@ include: "rules/denoise_degibbs.smk"
 include: "rules/topup_eddy_prep.smk"
 include: "rules/topup_eddy.smk"
 include: "rules/post_eddy.smk"
+include: "rules/bias_correct.smk"
 
 
 rule all:
     input:
         expand(
-            os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-eddy_dwi.mif"),
+            os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-preproc_dwi.mif"),
             subject=PARTICIPANTS,
         ),
         expand(

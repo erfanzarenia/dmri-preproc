@@ -129,6 +129,13 @@ mrtrix:
   min_denoise_volumes: 30
   dwidenoise_nthreads: 6
   mrdegibbs_nthreads: 6
+  dwibiascorrect_nthreads: 8
+  
+
+
+software:
+  ants:
+    bin: "/software/ants/ants-2.6.5/bin"
 
 fsl:
   topup_config: "b02b0.cnf"
