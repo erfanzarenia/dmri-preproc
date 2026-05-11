@@ -1,6 +1,5 @@
 # ---- begin snakebids boilerplate ---------------------------------------------
 
-import os
 import snakebids
 from snakebids import bids
 
@@ -17,8 +16,7 @@ inputs = snakebids.generate_inputs(
     use_bids_inputs=True,
 )
 
-wildcard_constraints:
-    **snakebids.get_wildcard_constraints(config["pybids_inputs"])
+wildcard_constraints: **snakebids.get_wildcard_constraints(config["pybids_inputs"])
 
 PARTICIPANTS = config["participant_label"]
 if isinstance(PARTICIPANTS, str):
@@ -27,8 +25,8 @@ if isinstance(PARTICIPANTS, str):
 # ---- end snakebids boilerplate -----------------------------------------------
 
 OUTDIR = config["output_dir"]
-LOGDIR = os.path.join(OUTDIR, "logs")
-QCDIR = os.path.join(OUTDIR, "qc")
+LOGDIR = f"{OUTDIR}/logs"
+QCDIR = f"{OUTDIR}/qc"
 BENCHDIR = os.path.join(OUTDIR, "benchmarks")
 
 include: "rules/import.smk"
@@ -38,6 +36,7 @@ include: "rules/topup_eddy_prep.smk"
 include: "rules/topup_eddy.smk"
 include: "rules/post_eddy.smk"
 include: "rules/bias_correct.smk"
+include: "rules/run_metadata.smk"
 
 
 rule all:
@@ -49,4 +48,5 @@ rule all:
         expand(
             os.path.join(OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-brain_mask.nii.gz"),
             subject=PARTICIPANTS,
-        )
+        ),
+        os.path.join(OUTDIR, "run_metadata"),

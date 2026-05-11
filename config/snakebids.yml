@@ -5,6 +5,7 @@ bids_dir: ""
 output_dir: ""
 
 debug: false
+
 derivatives: false
 
 analysis_levels: &analysis_levels
@@ -104,11 +105,11 @@ parse_args:
     choices: *analysis_levels
 
   --participant_label:
-    help: The label(s) of the participant(s) that should be analyzed.
+    help: The label(s) of the participant(s) that should be analyzed. The label corresponds to sub-<participant_label> from the BIDS spec, so it does not include "sub-". If omitted, all subjects are analyzed.
     nargs: "+"
 
   --exclude_participant_label:
-    help: The label(s) of the participant(s) that should be excluded.
+    help: The label(s) of the participant(s) that should be excluded. The label corresponds to sub-<participant_label> from the BIDS spec, so it does not include "sub-". If omitted, no subjects are excluded.
     nargs: "+"
 
   --derivatives:
@@ -117,27 +118,27 @@ parse_args:
     nargs: "+"
 
 singularity:
-  mrtrix: "docker://mrtrix3/mrtrix3:3.0.4"
   fsl: "docker://brainlife/fsl/6.0.0"
+  mrtrix: "docker://mrtrix3/mrtrix3:3.0.4"
+  ants: "docker://antsx/ants:2.6.2"
+
+software:
+  fsl:
+    eddy_exe: "/software/fsl/6.0.4/bin/eddy_cpu"
+  ants:
+    bin: "/software/ants/ants-2.6.5/bin"
 
 mrtrix:
-  default_nthreads: 4
-  mrconvert_nthreads: 4
-  dwi2mask_nthreads: 4
   denoise: true
   degibbs: true
   min_denoise_volumes: 30
+  default_nthreads: 4
   dwidenoise_nthreads: 6
   mrdegibbs_nthreads: 6
+  dwi2mask_nthreads: 4
+  mrconvert_nthreads: 4
   dwibiascorrect_nthreads: 8
-  
-
-
-software:
-  ants:
-    bin: "/software/ants/ants-2.6.5/bin"
 
 fsl:
   topup_config: "b02b0.cnf"
   eddy_nthreads: 8
-  eddy_exe: "/software/fsl/6.0.4/bin/eddy_cpu"
