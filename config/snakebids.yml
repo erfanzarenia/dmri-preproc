@@ -121,24 +121,32 @@ singularity:
   fsl: "docker://brainlife/fsl/6.0.0"
   mrtrix: "docker://mrtrix3/mrtrix3:3.0.4"
   ants: "docker://antsx/ants:2.6.2"
+  synthstrip: "docker://freesurfer/synthstrip:latest"
 
 software:
   fsl:
     eddy_exe: "/software/fsl/6.0.4/bin/eddy_cpu"
   ants:
     bin: "/software/ants/ants-2.6.5/bin"
+  synthstrip:
+    exe: "python3 /freesurfer/mri_synthstrip"
+
+threads:
+  default: 4
+  mrtrix:
+    mrconvert: 4
+    dwidenoise: 6
+    mrdegibbs: 6
+    dwibiascorrect: 8
+  fsl:
+    eddy: 8
+  synthstrip:
+    synthstrip: 8
 
 mrtrix:
   denoise: true
   degibbs: true
   min_denoise_volumes: 30
-  default_nthreads: 4
-  dwidenoise_nthreads: 6
-  mrdegibbs_nthreads: 6
-  dwi2mask_nthreads: 4
-  mrconvert_nthreads: 4
-  dwibiascorrect_nthreads: 8
 
 fsl:
   topup_config: "b02b0.cnf"
-  eddy_nthreads: 8

@@ -5,7 +5,6 @@ MIN_DENOISE_VOLUMES = config["mrtrix"].get("min_denoise_volumes", 30)
 DENOISE_ENABLED = config["mrtrix"].get("denoise", True)
 DEGIBBS_ENABLED = config["mrtrix"].get("degibbs", True)
 
-
 rule dwidenoise_run_01:
     input:
         mif=rules.convert_to_mif_run_01.output.mif,
@@ -28,7 +27,7 @@ rule dwidenoise_run_01:
         min_volumes=MIN_DENOISE_VOLUMES,
         denoise_enabled=str(DENOISE_ENABLED).lower(),
     threads:
-        config["mrtrix"].get("dwidenoise_nthreads", 1)
+        config["threads"]["mrtrix"].get("dwidenoise", config["threads"].get("default", 1))
     container:
         config["singularity"]["mrtrix"]
     shell:
@@ -83,7 +82,7 @@ rule dwidenoise_run_02:
         min_volumes=MIN_DENOISE_VOLUMES,
         denoise_enabled=str(DENOISE_ENABLED).lower(),
     threads:
-        config["mrtrix"].get("dwidenoise_nthreads", 1)
+        config["threads"]["mrtrix"].get("dwidenoise", config["threads"].get("default", 1))
     container:
         config["singularity"]["mrtrix"]
     shell:
@@ -135,7 +134,7 @@ rule mrdegibbs_run_01:
     params:
         degibbs_enabled=str(DEGIBBS_ENABLED).lower(),
     threads:
-        config["mrtrix"].get("mrdegibbs_nthreads", 1)
+        config["threads"]["mrtrix"].get("mrdegibbs", config["threads"].get("default", 1))
     container:
         config["singularity"]["mrtrix"]
     shell:
@@ -171,7 +170,7 @@ rule mrdegibbs_run_02:
     params:
         degibbs_enabled=str(DEGIBBS_ENABLED).lower(),
     threads:
-        config["mrtrix"].get("mrdegibbs_nthreads", 1)
+        config["threads"]["mrtrix"].get("mrdegibbs", config["threads"].get("default", 1))
     container:
         config["singularity"]["mrtrix"]
     shell:

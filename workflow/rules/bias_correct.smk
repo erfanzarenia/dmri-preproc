@@ -1,16 +1,16 @@
 import os
 
 
-MRTRIX_DEFAULT_NTHREADS = config["mrtrix"].get("default_nthreads", 1)
-DWIBIASCORRECT_NTHREADS = config["mrtrix"].get(
-    "dwibiascorrect_nthreads", MRTRIX_DEFAULT_NTHREADS
+ANTS_BIN = config.get("software", {}).get("ants", {}).get(
+    "bin",
+    config.get("software", {}).get("ants_bin", ""),
 )
 
 
 rule bias_correct_dwi:
     input:
         dwi=rules.convert_eddy_to_mif.output.mif,
-        mask=rules.make_preproc_mask.output.mif,
+        mask=rules.convert_eddy_mask_to_mif.output.mif,
     output:
         mif=os.path.join(
             OUTDIR, "sub-{subject}", "dwi", "sub-{subject}_desc-preproc_dwi.mif"
@@ -20,18 +20,16 @@ rule bias_correct_dwi:
     benchmark:
         os.path.join(BENCHDIR, "sub-{subject}", "bias_correct_dwi.tsv")
     threads:
-        DWIBIASCORRECT_NTHREADS
+        config["threads"]["mrtrix"].get("dwibiascorrect", config["threads"].get("default", 1))
     container:
         config["singularity"]["mrtrix"]
-    params:
-        ants_bin=config["software"]["ants"].get("bin", "")
     shell:
         r"""
         mkdir -p "$(dirname "{output.mif}")"
         mkdir -p "$(dirname "{log}")"
-    
-        export PATH="{params.ants_bin}:$PATH"
-    
+
+        export PATH="{ANTS_BIN}:$PATH"
+
         dwibiascorrect ants \
           -nthreads {threads} \
           -mask "{input.mask}" \

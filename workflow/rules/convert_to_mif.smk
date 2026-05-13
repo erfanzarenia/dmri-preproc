@@ -19,6 +19,8 @@ rule convert_to_mif_run_01:
         )
     log:
         os.path.join(LOGDIR, "sub-{subject}", "convert_to_mif_run_01.log")
+    threads:
+        config["threads"]["mrtrix"].get("mrconvert", config["threads"].get("default", 1))
     container:
         config["singularity"]["mrtrix"]
     shell:
@@ -47,6 +49,8 @@ rule convert_to_mif_run_02:
         )
     log:
         os.path.join(LOGDIR, "sub-{subject}", "convert_to_mif_run_02.log")
+    threads:
+        config["threads"]["mrtrix"].get("mrconvert", config["threads"].get("default", 1))
     container:
         config["singularity"]["mrtrix"]
     shell:
