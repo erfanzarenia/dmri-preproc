@@ -6,6 +6,7 @@ if [ "$#" -lt 2 ]; then
     exit 1
 fi
 
+DEFAULT_CORES=18
 BIDS_DIR=$(realpath "$1")
 OUTPUT_DIR=$(realpath "$2")
 shift 2
@@ -32,12 +33,10 @@ done
 
 CMD=(
     snakemake
-    -p
-    --cores
-    all
-    --profile
-    none
+    -p -r
+    --profile none
     "${SNAKEMAKE_ARGS[@]}"
+    --cores "${DEFAULT_CORES}"
     --config
     "bids_dir=${BIDS_DIR}"
     "output_dir=${OUTPUT_DIR}"

@@ -55,4 +55,8 @@ rule all:
             ),
             subject=PARTICIPANTS,
         ),
+        expand(
+            os.path.join(QCDIR, "sub-{subject}", "eddy_quad"),
+            subject=PARTICIPANTS,
+        ),
         os.path.join(OUTDIR, "run_metadata"),

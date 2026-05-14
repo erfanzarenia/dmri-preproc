@@ -2,9 +2,7 @@ import os
 
 TOPUP_CONFIG = config["fsl"].get("topup_config", "b02b0.cnf")
 EDDY_EXE = config["software"]["fsl"].get("eddy_exe", "eddy_cpu")
-SYNTHSTRIP_EXE = config["software"]["synthstrip"].get(
-    "exe", "python3 /freesurfer/mri_synthstrip"
-)
+SYNTHSTRIP_EXE = config["software"]["synthstrip"].get("exe", "python3 /freesurfer/mri_synthstrip")
 
 
 rule export_topup_b0pair_nii:
@@ -197,7 +195,7 @@ rule run_eddy:
           --nthr={threads} \
           &> "{log}"
 
-        mv "{params.eddy_base}.nii.gz" "{output.nii}"
-        mv "{params.eddy_base}.eddy_rotated_bvecs" "{output.bvec}"
+        cp "{params.eddy_base}.nii.gz" "{output.nii}"
+        cp "{params.eddy_base}.eddy_rotated_bvecs" "{output.bvec}"
         cp "{input.preeddy_bval}" "{output.bval}"
         """

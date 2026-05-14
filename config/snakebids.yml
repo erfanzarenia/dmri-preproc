@@ -118,14 +118,15 @@ parse_args:
     nargs: "+"
 
 singularity:
-  fsl: "docker://brainlife/fsl/6.0.0"
+  fsl: "docker://brainlife/fsl:6.0.7.22"
   mrtrix: "docker://mrtrix3/mrtrix3:3.0.4"
   ants: "docker://antsx/ants:2.6.2"
   synthstrip: "docker://freesurfer/synthstrip:latest"
 
 software:
   fsl:
-    eddy_exe: "/software/fsl/6.0.4/bin/eddy_cpu"
+    eddy_exe: "eddy_cpu"
+    eddy_quad_exe: "eddy_quad"
   ants:
     bin: "/software/ants/ants-2.6.5/bin"
   synthstrip:

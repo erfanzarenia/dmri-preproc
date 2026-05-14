@@ -1,10 +1,6 @@
 import os
 
-
-ANTS_BIN = config.get("software", {}).get("ants", {}).get(
-    "bin",
-    config.get("software", {}).get("ants_bin", ""),
-)
+ANTS_BIN = config["software"]["ants"].get("bin", "")
 
 
 rule bias_correct_dwi:
@@ -21,8 +17,6 @@ rule bias_correct_dwi:
         os.path.join(BENCHDIR, "sub-{subject}", "bias_correct_dwi.tsv")
     threads:
         config["threads"]["mrtrix"].get("dwibiascorrect", config["threads"].get("default", 1))
-    container:
-        config["singularity"]["mrtrix"]
     shell:
         r"""
         mkdir -p "$(dirname "{output.mif}")"
